@@ -109,9 +109,7 @@ const Login = ({
           Forgot password?
         </Button>
         <div>
-          <Button disabled={email.length === 0 || password.length === 0}>
-            Login
-          </Button>
+          <Button>Login</Button>
         </div>
       </form>
     </article>

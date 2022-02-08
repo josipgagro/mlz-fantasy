@@ -142,7 +142,7 @@ const Registration = (): JSX.Element => {
           validationMsg={passwordConfirmationValidationMessage}
           ref={passwordConfirmationRef}
         />
-        <Button disabled={true}>Register</Button>
+        <Button>Register</Button>
       </form>
     </article>
   );
