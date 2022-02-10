@@ -1,11 +1,8 @@
-export default function Error({
-  error: { title, message },
-}: {
-  error: {
-    title: string;
-    message: string;
-  };
-}) {
+interface IError {
+  error: { title: string; message: string };
+}
+
+export default function Error({ error: { title, message } }: IError) {
   return (
     <div>
       <h3>{title}</h3>
