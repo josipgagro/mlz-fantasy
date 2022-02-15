@@ -1,11 +1,11 @@
 import { FormEvent, useState } from "react";
-//@ts-ignore
 import { supabase } from "../../supabaseClient";
-import { FormServerError } from "../Form/Constants";
+import { FormServerError } from "../../Constants";
 import { useEmailInput } from "../Form/Effects/useEmailInput";
 import Input from "../Form/Input";
 import Button from "../Global/Button";
 import Error from "../Form/FormError";
+import Heading from "../Global/Heading";
 
 export default function ForgotPassword(): JSX.Element {
   const {
@@ -56,7 +56,7 @@ export default function ForgotPassword(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Reset password</h1>
+      <Heading>Reset password</Heading>
       {error.title && error.message && <Error error={error} />}
       <p>{statusMessage}</p>
       <Input

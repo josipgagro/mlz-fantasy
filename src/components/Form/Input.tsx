@@ -29,12 +29,17 @@ export default forwardRef(
     };
 
     return (
-      <div>
+      <div className={props.className}>
         {props.label && (
-          <label htmlFor={props.id} className="flex justify-between">
+          <label
+            htmlFor={props.id}
+            className="flex justify-between items-baseline"
+          >
             <span>{props.label}:</span>
             {props.validationMsg && (
-              <span className="text-red-700">{props.validationMsg}</span>
+              <span className="text-red-700 text-xs">
+                {props.validationMsg}
+              </span>
             )}
           </label>
         )}
@@ -46,7 +51,7 @@ export default forwardRef(
             id={props.id}
             ref={ref}
             onChange={props.onChange}
-            className="h-8 w-full border-2 text-black focus:outline-none"
+            className="h-8 w-full border-solid border-b-2 text-black focus:outline-none"
           />
           {props.type === "password" && (
             <button type="button" onClick={handleInputTypeChange}>

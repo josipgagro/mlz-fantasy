@@ -4,11 +4,13 @@ import Input from "../Form/Input";
 import Error from "../Form/FormError";
 import { usePasswordInput } from "../Form/Effects/usePasswordInput";
 import { useEmailInput } from "../Form/Effects/useEmailInput";
-import { FormServerError } from "../Form/Constants";
+import { FormServerError } from "../../Constants";
 import { useAppDispatch } from "../../store/store";
 import { setLoading } from "../../store/slices/loadingSlice";
 import Button from "../Global/Button";
 import { setUser } from "../../store/slices/userSlice";
+import { useNavigate } from "react-router-dom";
+import Heading from "../Global/Heading";
 
 const Login = ({
   showPasswordReset,
@@ -17,6 +19,7 @@ const Login = ({
 }): JSX.Element => {
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     value: email,
@@ -60,6 +63,7 @@ const Login = ({
 
         if (user) {
           dispatch(setUser(user));
+          navigate("/");
         }
 
         if (error) {
@@ -80,38 +84,46 @@ const Login = ({
   };
 
   return (
-    <article className="bg-slate-800 text-gray-50">
-      <h1>Login</h1>
-      {error.title && error.message && <Error error={error} />}
-      <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
-        <Input
-          label="Email"
-          type="text"
-          name="email"
-          id="email"
-          validationMsg={emailValidationMessage}
-          value={email}
-          required={true}
-          ref={emailRef}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          label="Lozinka"
-          type="password"
-          value={password}
-          name="password"
-          id="password"
-          validationMsg={passwordValidationMessage}
-          ref={passwordRef}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button onClick={showPasswordReset} btnStyle={"link"}>
-          Forgot password?
-        </Button>
-        <div>
-          <Button>Login</Button>
-        </div>
-      </form>
+    <article className="h-full p-8 mt-auto flex flex-col justify-between">
+      <Heading>Login</Heading>
+      <div>
+        {error.title && error.message && <Error error={error} />}
+        <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
+          <Input
+            label="Email"
+            className="mb-5"
+            type="text"
+            name="email"
+            id="email"
+            validationMsg={emailValidationMessage}
+            value={email}
+            required={true}
+            ref={emailRef}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            label="Password"
+            type="password"
+            value={password}
+            name="password"
+            id="password"
+            validationMsg={passwordValidationMessage}
+            ref={passwordRef}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            className="mb-5"
+            variant={"link"}
+            type="button"
+            onClick={showPasswordReset}
+          >
+            Forgot password?
+          </Button>
+          <div>
+            <Button variant="secondary">Login</Button>
+          </div>
+        </form>
+      </div>
     </article>
   );
 };

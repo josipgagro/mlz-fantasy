@@ -2,16 +2,22 @@ import Auth from "./components/Auth/Auth";
 import { Loading } from "./components/Global/Loading";
 import { useAppSelector } from "./store/store";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navigation from "./components/Global/Navigation";
+import UserProfile from "./components/User/UserProfile";
+import Home from "./components/Home/Home";
 
 function App() {
   const isLoading = useAppSelector((state) => state.loading.isLoading);
 
   return (
-    <div className="App relative">
+    <div className="App relative w-screen h-screen">
       {isLoading && <Loading />}
       <BrowserRouter>
+        <Navigation />
         <Routes>
           <Route path="/auth" element={<Auth />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { EmailRegex, IInputEffect } from "../Constants";
+import { EmailRegex, IInputEffect } from "../../../Constants";
 import { useRequiredInput } from "./useRequiredInput";
 
 export function useEmailInput(): IInputEffect {

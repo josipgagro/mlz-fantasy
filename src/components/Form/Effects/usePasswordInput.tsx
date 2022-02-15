@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IInputEffect } from "../Constants";
+import { IInputEffect } from "../../../Constants";
 import { useRequiredInput } from "./useRequiredInput";
 
 export function usePasswordInput(

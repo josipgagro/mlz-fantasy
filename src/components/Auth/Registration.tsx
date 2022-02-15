@@ -5,10 +5,12 @@ import Error from "../Form/FormError";
 import { usePasswordInput } from "../Form/Effects/usePasswordInput";
 import { useEmailInput } from "../Form/Effects/useEmailInput";
 import { useRequiredInput } from "../Form/Effects/useRequiredInput";
-import { FormServerError } from "../Form/Constants";
+import { FormServerError } from "../../Constants";
 import Button from "../Global/Button";
 import { useAppDispatch } from "../../store/store";
 import { setLoading } from "../../store/slices/loadingSlice";
+import { setUser } from "../../store/slices/userSlice";
+import Heading from "../Global/Heading";
 
 const Registration = (): JSX.Element => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -82,11 +84,14 @@ const Registration = (): JSX.Element => {
         );
 
         if (user) {
-          console.log(user);
+          dispatch(setUser(user));
         }
 
         if (error) {
-          console.log(error);
+          setError({
+            title: "Someting went wrong!",
+            message: "Please try again later.",
+          });
         }
       }
     } catch (error) {
@@ -101,11 +106,12 @@ const Registration = (): JSX.Element => {
 
   return (
     <article className="bg-amber-400">
-      <h1>Registracija</h1>
+      <Heading>Registration</Heading>
       {error.title && error.message && <Error error={error} />}
       <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
         <Input
-          label="Korisnicko ime"
+          className="mb-5"
+          label="Username"
           value={username}
           id="username"
           name="username"
@@ -115,6 +121,7 @@ const Registration = (): JSX.Element => {
         />
         <Input
           label="Email"
+          className="mb-5"
           value={email}
           id="registration-email"
           name="email"
@@ -123,7 +130,8 @@ const Registration = (): JSX.Element => {
           ref={emailRef}
         />
         <Input
-          label="Lozinka"
+          label="Password"
+          className="mb-5"
           value={password}
           id="registration-password"
           name="password"
@@ -133,7 +141,8 @@ const Registration = (): JSX.Element => {
           ref={passwordRef}
         />
         <Input
-          label="Potvrdi lozinku"
+          label="Repeat password"
+          className="mb-3"
           value={passwordConfirmation}
           id="password-confirmation"
           name="passwordConfirmation"

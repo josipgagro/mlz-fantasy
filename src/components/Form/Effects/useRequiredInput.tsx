@@ -1,5 +1,5 @@
 import { useRef, useState, Dispatch, SetStateAction, useEffect } from "react";
-import { IInputEffect } from "../Constants";
+import { IInputEffect } from "../../../Constants";
 
 interface IRequiredInput extends IInputEffect {
   setValidationMessage: Dispatch<SetStateAction<string>>;
