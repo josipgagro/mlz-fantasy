@@ -59,7 +59,7 @@ export default function ForgotPassword(): JSX.Element {
       onSubmit={handleSubmit}
       className="h-full p-8 flex flex-col justify-between"
     >
-      <Heading className="border-b-2 border-beta-300">Reset password</Heading>
+      <Heading>Reset password</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
         <p>{statusMessage}</p>

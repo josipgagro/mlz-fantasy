@@ -60,7 +60,7 @@ const Auth = (): JSX.Element => {
           )}
         </div>
         <div
-          className={`p-8 rounded-xl bg-alfa-200 flex-auto w-2/4 absolute bottom-0 top-0 transition-[left] duration-700 text-beta-200 flex flex-col justify-center items-center text-center before:absolute before:content-[''] before:top-4 before:right-4 before:left-4 before:bottom-4 before:border-2 before:rounded-xl before:block before:border-white ${
+          className={`p-8 rounded-xl bg-alfa-200 flex-auto w-2/4 absolute bottom-0 top-0 transition-[left] duration-700 text-white flex flex-col justify-center items-center text-center before:absolute before:content-[''] before:top-4 before:right-4 before:left-4 before:bottom-4 before:border-2 before:rounded-xl before:block before:border-beta-300 ${
             notLogin
               ? "left-0 rounded-tr-none rounded-br-none"
               : "left-1/2 rounded-tl-none rounded-bl-none"

@@ -102,7 +102,7 @@ const Registration = (): JSX.Element => {
 
   return (
     <article className="h-full p-8 flex flex-col justify-between">
-      <Heading className="border-b-2 border-beta-300">Registration</Heading>
+      <Heading>Registration</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
         <form onSubmit={handleSubmit} autoComplete="off">

@@ -78,7 +78,7 @@ const Login = ({
 
   return (
     <article className="h-full p-8 flex flex-col justify-between">
-      <Heading className="border-b-2 border-beta-300">Login</Heading>
+      <Heading>Login</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
         <form onSubmit={handleSubmit} autoComplete="off">
