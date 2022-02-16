@@ -84,7 +84,7 @@ const Login = ({
   };
 
   return (
-    <article className="h-full p-8 mt-auto flex flex-col justify-between">
+    <article className="h-full p-8 flex flex-col justify-between">
       <Heading>Login</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}

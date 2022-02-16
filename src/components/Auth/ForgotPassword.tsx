@@ -55,20 +55,26 @@ export default function ForgotPassword(): JSX.Element {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="h-full p-8 flex flex-col justify-between"
+    >
       <Heading>Reset password</Heading>
-      {error.title && error.message && <Error error={error} />}
-      <p>{statusMessage}</p>
-      <Input
-        label="Email"
-        value={email}
-        id="forget-pw-email"
-        name="email"
-        onChange={(e) => setEmail(e.target.value)}
-        validationMsg={emailValidationMessage}
-        ref={emailRef}
-      />
-      <Button>Reset password</Button>
+      <div>
+        {error.title && error.message && <Error error={error} />}
+        <p>{statusMessage}</p>
+        <Input
+          label="Email"
+          className="mb-5"
+          value={email}
+          id="forget-pw-email"
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+          validationMsg={emailValidationMessage}
+          ref={emailRef}
+        />
+        <Button variant="secondary">Reset password</Button>
+      </div>
     </form>
   );
 }

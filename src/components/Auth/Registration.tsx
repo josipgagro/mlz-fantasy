@@ -105,54 +105,58 @@ const Registration = (): JSX.Element => {
   }
 
   return (
-    <article className="bg-amber-400">
+    <article className="h-full p-8 flex flex-col justify-between">
       <Heading>Registration</Heading>
-      {error.title && error.message && <Error error={error} />}
-      <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
-        <Input
-          className="mb-5"
-          label="Username"
-          value={username}
-          id="username"
-          name="username"
-          ref={usernameRef}
-          validationMsg={usernameValidationMsg}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          label="Email"
-          className="mb-5"
-          value={email}
-          id="registration-email"
-          name="email"
-          onChange={(e) => setEmail(e.target.value)}
-          validationMsg={emailValidationMessage}
-          ref={emailRef}
-        />
-        <Input
-          label="Password"
-          className="mb-5"
-          value={password}
-          id="registration-password"
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          validationMsg={passwordValidationMessage}
-          ref={passwordRef}
-        />
-        <Input
-          label="Repeat password"
-          className="mb-3"
-          value={passwordConfirmation}
-          id="password-confirmation"
-          name="passwordConfirmation"
-          type="password"
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          validationMsg={passwordConfirmationValidationMessage}
-          ref={passwordConfirmationRef}
-        />
-        <Button>Register</Button>
-      </form>
+      <div>
+        {error.title && error.message && <Error error={error} />}
+        <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
+          <Input
+            className="mb-5"
+            label="Username"
+            value={username}
+            id="username"
+            name="username"
+            ref={usernameRef}
+            validationMsg={usernameValidationMsg}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            label="Email"
+            className="mb-5"
+            value={email}
+            id="registration-email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            validationMsg={emailValidationMessage}
+            ref={emailRef}
+          />
+          <Input
+            label="Password"
+            className="mb-5"
+            value={password}
+            id="registration-password"
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            validationMsg={passwordValidationMessage}
+            ref={passwordRef}
+          />
+          <Input
+            label="Repeat password"
+            className="mb-3"
+            value={passwordConfirmation}
+            id="password-confirmation"
+            name="passwordConfirmation"
+            type="password"
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            validationMsg={passwordConfirmationValidationMessage}
+            ref={passwordConfirmationRef}
+          />
+          <Button className="mt-5" variant="secondary">
+            Register
+          </Button>
+        </form>
+      </div>
     </article>
   );
 };
