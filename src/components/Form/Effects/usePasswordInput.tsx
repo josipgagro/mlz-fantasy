@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { IInputEffect } from "../../../Constants";
 import { useRequiredInput } from "./useRequiredInput";
 
+interface IPasswordInputEffect extends IInputEffect {
+  samePasswordValidationCallback: () => boolean;
+}
+
 export function usePasswordInput(
   length: number = 8,
   samePw?: string
-): IInputEffect {
+): IPasswordInputEffect {
   const {
     value,
     setValue,
@@ -15,15 +19,15 @@ export function usePasswordInput(
     requiredValidationCallback,
   } = useRequiredInput();
 
+  const setValidationError = (message: string): void => {
+    setValidationMessage(message);
+
+    if (inputRef.current) {
+      inputRef.current.classList.add("border-red-700");
+    }
+  };
+
   useEffect(() => {
-    const setValidationError = (message: string): void => {
-      setValidationMessage(message);
-
-      if (inputRef.current) {
-        inputRef.current.classList.add("border-red-700");
-      }
-    };
-
     if (value.length > 0 && value.length < length) {
       setValidationError(
         `Password needs to have at least ${length} characters.`
@@ -40,11 +44,27 @@ export function usePasswordInput(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, length, samePw]);
 
+  const samePasswordValidationCallback = (): boolean => {
+    if (value.length === 0) {
+      return requiredValidationCallback();
+    } else if (
+      value.length > 0 &&
+      value.length < length &&
+      samePw !== undefined &&
+      value !== samePw
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
   return {
     value,
     setValue,
     validationMessage,
     inputRef,
     requiredValidationCallback,
+    samePasswordValidationCallback,
   };
 }

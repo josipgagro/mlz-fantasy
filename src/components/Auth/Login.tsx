@@ -1,4 +1,4 @@
-import { useState, FormEvent, useRef, MouseEventHandler } from "react";
+import { useState, FormEvent, MouseEventHandler } from "react";
 import { supabase } from "../../supabaseClient";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
@@ -17,7 +17,6 @@ const Login = ({
 }: {
   showPasswordReset: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element => {
-  const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -45,16 +44,10 @@ const Login = ({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const form = formRef.current;
-
       const isEmailEmpty = requiredEmailValidationCallback();
       const isPasswordEmpty = requiredPasswordValidationCallback();
 
-      if (
-        isEmailEmpty &&
-        isPasswordEmpty &&
-        !form?.querySelector(".border-red-700")
-      ) {
+      if (isEmailEmpty && isPasswordEmpty) {
         dispatch(setLoading(true));
         const { user, error } = await supabase.auth.signIn({
           email,
@@ -85,10 +78,10 @@ const Login = ({
 
   return (
     <article className="h-full p-8 flex flex-col justify-between">
-      <Heading>Login</Heading>
+      <Heading className="border-b-2 border-beta-300">Login</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
-        <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
+        <form onSubmit={handleSubmit} autoComplete="off">
           <Input
             label="Email"
             className="mb-5"

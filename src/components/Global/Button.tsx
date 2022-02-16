@@ -7,7 +7,7 @@ interface IButton extends HTMLProps<HTMLButtonElement> {
 
 enum variants {
   primary = "h-10 px-4 rounded text-white bg-alfa-200 hover:bg-alfa-100 transition-colors duration-300 drop-shadow-md",
-  secondary = "h-10 px-4 rounded text-white bg-beta-200 hover:bg-beta-300 transition-colors duration-300 drop-shadow-md",
+  secondary = "h-10 px-4 rounded text-white bg-beta-300 hover:bg-beta-200 transition-colors duration-300 drop-shadow-md",
   link = "h-10 text-omega-300 bg-none hover:text-omega-200 transition-colors duration-200",
 }
 

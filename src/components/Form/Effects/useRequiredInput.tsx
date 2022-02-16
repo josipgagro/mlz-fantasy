@@ -25,10 +25,10 @@ export function useRequiredInput(): IRequiredInput {
       setValidationMessage("Required field.");
       inputRef?.current?.classList.add("border-red-700");
       return false;
-    } else {
-      setValidationMessage("");
-      inputRef?.current?.classList.remove("border-red-700");
     }
+
+    setValidationMessage("");
+    inputRef?.current?.classList.remove("border-red-700");
 
     return true;
   };

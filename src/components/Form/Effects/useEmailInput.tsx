@@ -23,11 +23,21 @@ export function useEmailInput(): IInputEffect {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const requiredEmailValidationCallback = (): boolean => {
+    if (!EmailRegex.test(value) && value.length > 0) {
+      return false;
+    } else if (value.length === 0) {
+      return requiredValidationCallback();
+    }
+
+    return true;
+  };
+
   return {
     value,
     setValue,
     validationMessage,
     inputRef,
-    requiredValidationCallback,
+    requiredValidationCallback: requiredEmailValidationCallback,
   };
 }

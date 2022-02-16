@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
@@ -13,7 +13,6 @@ import { setUser } from "../../store/slices/userSlice";
 import Heading from "../Global/Heading";
 
 const Registration = (): JSX.Element => {
-  const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState<FormServerError>({
     title: "",
     message: "",
@@ -49,26 +48,23 @@ const Registration = (): JSX.Element => {
     setValue: setPasswordConfirmation,
     validationMessage: passwordConfirmationValidationMessage,
     inputRef: passwordConfirmationRef,
-    requiredValidationCallback: passwordConfRequiredValidationCallback,
+    samePasswordValidationCallback: passwordConfValidationCallback,
   } = usePasswordInput(8, password);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = formRef.current;
 
     const isUsernameEmpty: boolean = usernameValidationCallback();
-    const isEmailEmpty: boolean = requiredEmailValidationCallback();
+    const isEmailValid: boolean = requiredEmailValidationCallback();
     const isPasswordEmpty: boolean = requiredPasswordValidationCallback();
-    const isPasswordConfEmpty: boolean =
-      passwordConfRequiredValidationCallback();
+    const isPasswordConfValid: boolean = passwordConfValidationCallback();
 
     try {
       if (
         !isUsernameEmpty &&
-        !isEmailEmpty &&
+        isEmailValid &&
         !isPasswordEmpty &&
-        !isPasswordConfEmpty &&
-        !form?.querySelector(".border-red-700")
+        isPasswordConfValid
       ) {
         dispatch(setLoading(true));
         const { user, error } = await supabase.auth.signUp(
@@ -106,10 +102,10 @@ const Registration = (): JSX.Element => {
 
   return (
     <article className="h-full p-8 flex flex-col justify-between">
-      <Heading>Registration</Heading>
+      <Heading className="border-b-2 border-beta-300">Registration</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
-        <form onSubmit={handleSubmit} ref={formRef} autoComplete="off">
+        <form onSubmit={handleSubmit} autoComplete="off">
           <Input
             className="mb-5"
             label="Username"
