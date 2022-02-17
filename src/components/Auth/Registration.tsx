@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, MouseEventHandler, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
@@ -12,7 +12,11 @@ import { setLoading } from "../../store/slices/loadingSlice";
 import { setUser } from "../../store/slices/userSlice";
 import Heading from "../Global/Heading";
 
-const Registration = (): JSX.Element => {
+const Registration = ({
+  showLogin,
+}: {
+  showLogin: MouseEventHandler<HTMLButtonElement>;
+}): JSX.Element => {
   const [error, setError] = useState<FormServerError>({
     title: "",
     message: "",
@@ -54,16 +58,16 @@ const Registration = (): JSX.Element => {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const isUsernameEmpty: boolean = usernameValidationCallback();
+    const isUsernameValida: boolean = usernameValidationCallback();
     const isEmailValid: boolean = requiredEmailValidationCallback();
-    const isPasswordEmpty: boolean = requiredPasswordValidationCallback();
+    const isPasswordValid: boolean = requiredPasswordValidationCallback();
     const isPasswordConfValid: boolean = passwordConfValidationCallback();
 
     try {
       if (
-        !isUsernameEmpty &&
+        isUsernameValida &&
         isEmailValid &&
-        !isPasswordEmpty &&
+        isPasswordValid &&
         isPasswordConfValid
       ) {
         dispatch(setLoading(true));
@@ -101,7 +105,7 @@ const Registration = (): JSX.Element => {
   }
 
   return (
-    <article className="h-full p-8 flex flex-col justify-between">
+    <article className="h-full p-5 md:p-8 flex flex-col justify-between">
       <Heading>Registration</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
@@ -148,9 +152,14 @@ const Registration = (): JSX.Element => {
             validationMsg={passwordConfirmationValidationMessage}
             ref={passwordConfirmationRef}
           />
-          <Button className="mt-5" variant="secondary">
-            Register
-          </Button>
+          <div className="mt-5">
+            <Button variant="secondary" className="mb-3 md:mb-0">
+              Register
+            </Button>
+            <Button variant="ternary" className="md:hidden" onClick={showLogin}>
+              Go to Login
+            </Button>
+          </div>
         </form>
       </div>
     </article>

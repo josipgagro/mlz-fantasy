@@ -14,8 +14,10 @@ import Heading from "../Global/Heading";
 
 const Login = ({
   showPasswordReset,
+  showRegistration,
 }: {
   showPasswordReset: MouseEventHandler<HTMLButtonElement>;
+  showRegistration: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -44,10 +46,10 @@ const Login = ({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const isEmailEmpty = requiredEmailValidationCallback();
-      const isPasswordEmpty = requiredPasswordValidationCallback();
+      const isEmailValid = requiredEmailValidationCallback();
+      const isPasswordValid = requiredPasswordValidationCallback();
 
-      if (isEmailEmpty && isPasswordEmpty) {
+      if (isEmailValid && isPasswordValid) {
         dispatch(setLoading(true));
         const { user, error } = await supabase.auth.signIn({
           email,
@@ -77,7 +79,7 @@ const Login = ({
   };
 
   return (
-    <article className="h-full p-8 flex flex-col justify-between">
+    <article className="h-full p-5 md:p-8 flex flex-col justify-between">
       <Heading>Login</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
@@ -113,7 +115,16 @@ const Login = ({
             Forgot password?
           </Button>
           <div>
-            <Button variant="secondary">Login</Button>
+            <Button variant="secondary" className="mb-3 md:mb-0">
+              Login
+            </Button>
+            <Button
+              variant="ternary"
+              className="md:hidden"
+              onClick={showRegistration}
+            >
+              Registration
+            </Button>
           </div>
         </form>
       </div>

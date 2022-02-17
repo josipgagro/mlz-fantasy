@@ -5,8 +5,8 @@ interface IHeading extends HTMLProps<HTMLHeadingElement> {
 }
 
 enum HeadingVariants {
-  big = "mb-10 text-6xl font-bold text-black",
-  small = "mb-1 text-2xl font-bold text-black",
+  big = "mb-10 text-5xl md:text-6xl font-bold text-black",
+  small = "mb-1 text-xl md:text-2xl font-bold text-black",
 }
 
 export default function Heading(props: IHeading): JSX.Element {

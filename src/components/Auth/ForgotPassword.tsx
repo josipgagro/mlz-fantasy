@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, MouseEventHandler, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { FormServerError } from "../../Constants";
 import { useEmailInput } from "../Form/Effects/useEmailInput";
@@ -7,7 +7,11 @@ import Button from "../Global/Button";
 import Error from "../Form/FormError";
 import Heading from "../Global/Heading";
 
-export default function ForgotPassword(): JSX.Element {
+export default function ForgotPassword({
+  showLogin,
+}: {
+  showLogin: MouseEventHandler<HTMLButtonElement>;
+}): JSX.Element {
   const {
     value: email,
     setValue: setEmail,
@@ -57,9 +61,9 @@ export default function ForgotPassword(): JSX.Element {
   return (
     <form
       onSubmit={handleSubmit}
-      className="h-full p-8 flex flex-col justify-between"
+      className="h-full p-5 md:p-8 flex flex-col justify-between"
     >
-      <Heading>Reset password</Heading>
+      <Heading className="mt-2 md:mt-0">Reset password</Heading>
       <div>
         {error.title && error.message && <Error error={error} />}
         <p>{statusMessage}</p>
@@ -73,7 +77,14 @@ export default function ForgotPassword(): JSX.Element {
           validationMsg={emailValidationMessage}
           ref={emailRef}
         />
-        <Button variant="secondary">Reset password</Button>
+        <div>
+          <Button variant="secondary" className="mb-3 md:mb-0">
+            Reset password
+          </Button>
+          <Button variant="ternary" className="md:hidden" onClick={showLogin}>
+            Go to Login
+          </Button>
+        </div>
       </div>
     </form>
   );

@@ -1,15 +1,19 @@
 import { HTMLProps } from "react";
 
 interface IButton extends HTMLProps<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "link";
+  variant?: "primary" | "secondary" | "ternary" | "link";
   type?: "submit" | "button" | "reset";
 }
 
-enum variants {
-  primary = "h-10 px-4 rounded text-white bg-alfa-200 hover:bg-alfa-100 transition-colors duration-300 drop-shadow-md",
-  secondary = "h-10 px-4 rounded text-white bg-beta-300 hover:bg-beta-200 transition-colors duration-300 drop-shadow-md",
-  link = "h-10 text-omega-300 bg-none hover:text-omega-200 transition-colors duration-200",
-}
+const commonBtnStyles: string =
+  "h-10 w-full md:w-auto px-4 md-2 rounded text-white transition-colors duration-300 drop-shadow-md";
+
+const variants = {
+  primary: `${commonBtnStyles} bg-alfa-200 hover:bg-alfa-100`,
+  secondary: `${commonBtnStyles} bg-beta-300 hover:bg-beta-200`,
+  ternary: `${commonBtnStyles} bg-omega-200 hover:bg-omega-300`,
+  link: "h-10 text-omega-300 bg-none hover:text-omega-200 transition-colors duration-200",
+};
 
 export default function Button(props: IButton): JSX.Element {
   const { variant, ...properties } = props;

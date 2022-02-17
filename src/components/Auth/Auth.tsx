@@ -43,24 +43,37 @@ const Auth = (): JSX.Element => {
     setNavigationCase(NAVIGATION_CASES.passwordReset);
   };
 
+  const showRegistration = (): void => {
+    setNavigationCase(NAVIGATION_CASES.registration);
+  };
+
+  const showLogin = (): void => {
+    setNavigationCase(NAVIGATION_CASES.login);
+  };
+
   const notLogin =
     NAVIGATION_CASES.registration === navigationCase ||
     NAVIGATION_CASES.passwordReset === navigationCase;
 
   return (
-    <section className="h-screen flex flex-col justify-center items-center relative">
-      <div className="h-4/6 w-[1000px] flex rounded-xl bg-white drop-shadow-2xl">
-        <div className={`w-2/4 ${notLogin ? "ml-auto" : null}`}>
+    <section className="h-screen p-2 flex flex-col justify-center items-center relative">
+      <div className="w-full h-[95vh] lg:h-[700px] lg:w-[1000px] flex flex-col md:flex-row rounded-xl bg-white drop-shadow-2xl">
+        <div className={`h-full md:w-2/4 ${notLogin ? "md:ml-auto" : null}`}>
           {NAVIGATION_CASES.login === navigationCase && (
-            <Login showPasswordReset={showPasswordReset} />
+            <Login
+              showPasswordReset={showPasswordReset}
+              showRegistration={showRegistration}
+            />
           )}
-          {NAVIGATION_CASES.registration === navigationCase && <Registration />}
+          {NAVIGATION_CASES.registration === navigationCase && (
+            <Registration showLogin={showLogin} />
+          )}
           {NAVIGATION_CASES.passwordReset === navigationCase && (
-            <ForgotPassword />
+            <ForgotPassword showLogin={showLogin} />
           )}
         </div>
         <div
-          className={`p-8 rounded-xl bg-alfa-200 flex-auto w-2/4 absolute bottom-0 top-0 transition-[left] duration-700 text-white flex flex-col justify-center items-center text-center before:absolute before:content-[''] before:top-4 before:right-4 before:left-4 before:bottom-4 before:border-2 before:rounded-xl before:block before:border-beta-300 ${
+          className={`hidden p-8 rounded-xl bg-alfa-200 w-2/4 absolute bottom-0 top-0 transition-[left] duration-700 text-white md:flex flex-auto flex-col justify-center items-center text-center before:absolute before:content-[''] before:top-4 before:right-4 before:left-4 before:bottom-4 before:border-2 before:rounded-xl before:block before:border-beta-300 ${
             notLogin
               ? "left-0 rounded-tr-none rounded-br-none"
               : "left-1/2 rounded-tl-none rounded-bl-none"
@@ -74,11 +87,12 @@ const Auth = (): JSX.Element => {
           </p>
           <Button
             variant="secondary"
+            type="button"
             className="w-52 mx-auto"
             onClick={() =>
               navigationCase === NAVIGATION_CASES.login
-                ? setNavigationCase(NAVIGATION_CASES.registration)
-                : setNavigationCase(NAVIGATION_CASES.login)
+                ? showRegistration()
+                : showLogin()
             }
           >
             {NAVIGATION_TEXT[navigationCase].button}
