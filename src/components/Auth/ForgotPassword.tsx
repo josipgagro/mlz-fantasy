@@ -6,6 +6,8 @@ import Input from "../Form/Input";
 import Button from "../Global/Button";
 import Error from "../Form/FormError";
 import Heading from "../Global/Heading";
+import { useAppDispatch } from "../../store/store";
+import { setLoading } from "../../store/slices/loadingSlice";
 
 export default function ForgotPassword({
   showLogin,
@@ -24,6 +26,7 @@ export default function ForgotPassword({
     title: "",
     message: "",
   });
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -32,6 +35,7 @@ export default function ForgotPassword({
 
     if (isEmailValid) {
       try {
+        dispatch(setLoading(true));
         const { data, error } = await supabase.auth.api.resetPasswordForEmail(
           email
         );
@@ -54,6 +58,7 @@ export default function ForgotPassword({
         });
       } finally {
         setEmail("");
+        dispatch(setLoading(false));
       }
     }
   };
