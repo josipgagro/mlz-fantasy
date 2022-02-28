@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Global/Navigation";
 import UserProfile from "./components/User/UserProfile";
 import Home from "./components/Home/Home";
+import RequireAuth from "./components/Auth/RequireAuth";
 
 function App() {
   const isLoading = useAppSelector((state) => state.loading.isLoading);
@@ -16,7 +17,14 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          <Route path="/user-profile" element={<UserProfile />} />
+          <Route
+            path="/user-profile"
+            element={
+              <RequireAuth>
+                <UserProfile />
+              </RequireAuth>
+            }
+          />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>

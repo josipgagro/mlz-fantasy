@@ -2,7 +2,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setLoading } from "../../store/slices/loadingSlice";
 import { setUser } from "../../store/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { supabase } from "../../supabaseClient";
+import firebase from "./../../firebaseConf";
+import { signOut } from "firebase/auth";
 
 export default function Navigation(): JSX.Element | null {
   const user = useAppSelector((state) => state.user.user);
@@ -13,7 +14,7 @@ export default function Navigation(): JSX.Element | null {
   const handleClick = async () => {
     dispatch(setLoading(true));
     try {
-      await supabase.auth.signOut();
+      await signOut(firebase.auth);
       dispatch(setUser(null));
       navigate("/");
     } catch (error) {
@@ -29,6 +30,7 @@ export default function Navigation(): JSX.Element | null {
         {!user && <Link to="/auth">Login</Link>}
         {user && (
           <>
+            <Link to="/">Home</Link>
             <Link to="/user-profile">User</Link>
             <button onClick={handleClick} type="button">
               Log out

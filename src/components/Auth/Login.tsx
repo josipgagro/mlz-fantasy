@@ -1,5 +1,6 @@
 import { useState, FormEvent, MouseEventHandler } from "react";
-import { supabase } from "../../supabaseClient";
+import firebase from "../../firebaseConf";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
 import { usePasswordInput } from "../Form/Effects/usePasswordInput";
@@ -9,8 +10,9 @@ import { useAppDispatch } from "../../store/store";
 import { setLoading } from "../../store/slices/loadingSlice";
 import Button from "../Global/Button";
 import { setUser } from "../../store/slices/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Heading from "../Global/Heading";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const Login = ({
   showPasswordReset,
@@ -21,6 +23,7 @@ const Login = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     value: email,
@@ -51,21 +54,24 @@ const Login = ({
 
       if (isEmailValid && isPasswordValid) {
         dispatch(setLoading(true));
-        const { user, error } = await supabase.auth.signIn({
+        const { user } = await signInWithEmailAndPassword(
+          firebase.auth,
           email,
-          password,
-        });
+          password
+        );
 
         if (user) {
-          dispatch(setUser(user));
-          navigate("/");
-        }
+          const { uid, displayName, email } = user;
 
-        if (error) {
-          setError({
-            title: "Someting went wrong!",
-            message: "You entered wrong data.",
-          });
+          const photoURL = user.photoURL
+            ? await getDownloadURL(ref(firebase.imagesRef, uid))
+            : await getDownloadURL(ref(firebase.imagesRef, "300.png"));
+
+          dispatch(setUser({ uid, displayName, email, photoURL }));
+
+          const state = location.state as { from: Location };
+          const from = state?.from?.pathname || "/";
+          navigate(from, { replace: true });
         }
       }
     } catch (error) {

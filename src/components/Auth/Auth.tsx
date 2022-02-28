@@ -89,10 +89,10 @@ const Auth = (): JSX.Element => {
             variant="secondary"
             type="button"
             className="w-52 mx-auto"
-            onClick={() =>
+            onClick={
               navigationCase === NAVIGATION_CASES.login
-                ? showRegistration()
-                : showLogin()
+                ? showRegistration
+                : showLogin
             }
           >
             {NAVIGATION_TEXT[navigationCase].button}

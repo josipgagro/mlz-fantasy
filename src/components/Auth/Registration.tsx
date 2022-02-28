@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEvent, MouseEventHandler, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import firebase from "../../firebaseConf";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
 import { usePasswordInput } from "../Form/Effects/usePasswordInput";
@@ -11,6 +13,8 @@ import { useAppDispatch } from "../../store/store";
 import { setLoading } from "../../store/slices/loadingSlice";
 import { setUser } from "../../store/slices/userSlice";
 import Heading from "../Global/Heading";
+import { useNavigate } from "react-router-dom";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const Registration = ({
   showLogin,
@@ -22,6 +26,7 @@ const Registration = ({
     message: "",
   });
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     value: username,
@@ -71,27 +76,24 @@ const Registration = ({
         isPasswordConfValid
       ) {
         dispatch(setLoading(true));
-        const { user, error } = await supabase.auth.signUp(
-          {
-            email,
-            password,
-          },
-          {
-            data: {
-              username,
-            },
-          }
+
+        const { user } = await createUserWithEmailAndPassword(
+          firebase.auth,
+          email,
+          password
+        );
+
+        const defaultImg = await getDownloadURL(
+          ref(firebase.imagesRef, "300.png")
         );
 
         if (user) {
-          dispatch(setUser(user));
-        }
-
-        if (error) {
-          setError({
-            title: "Someting went wrong!",
-            message: "Please try again later.",
-          });
+          // if (firebase.user) {
+          //   await updateProfile(firebase.user, { photoURL: defaultImg });
+          // }
+          const { uid, displayName, email } = user;
+          dispatch(setUser({ uid, displayName, email, photoURL: defaultImg }));
+          navigate("/");
         }
       }
     } catch (error) {

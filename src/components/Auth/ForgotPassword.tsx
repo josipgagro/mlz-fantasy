@@ -1,5 +1,6 @@
 import { FormEvent, MouseEventHandler, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import firebase from "../../firebaseConf";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { FormServerError } from "../../Constants";
 import { useEmailInput } from "../Form/Effects/useEmailInput";
 import Input from "../Form/Input";
@@ -34,32 +35,22 @@ export default function ForgotPassword({
     const isEmailValid = requiredEmailValidationCallback();
 
     if (isEmailValid) {
-      try {
-        dispatch(setLoading(true));
-        const { data, error } = await supabase.auth.api.resetPasswordForEmail(
-          email
-        );
-
-        if (data) {
+      dispatch(setLoading(true));
+      sendPasswordResetEmail(firebase.auth, email)
+        .then(() => {
           setStatusMessage("Request for password message has been sent.");
-        }
-
-        if (error) {
+        })
+        .catch((error) => {
+          console.error(error);
           setError({
             title: "Someting went wrong!",
             message: "Please try again later.",
           });
-        }
-      } catch (error) {
-        console.error(error);
-        setError({
-          title: "Someting went wrong!",
-          message: "Please try again later.",
+        })
+        .finally(() => {
+          setEmail("");
+          dispatch(setLoading(false));
         });
-      } finally {
-        setEmail("");
-        dispatch(setLoading(false));
-      }
     }
   };
 
