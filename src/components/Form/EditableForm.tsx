@@ -52,7 +52,10 @@ export default function EditableForm(props: IEditableForm) {
           {props.dataToEdit.map((child) => {
             const { value, label } = child;
             return value?.length > 0 ? (
-              <li className="mb-5 flex justify-between items-baseline">
+              <li
+                className="mb-5 flex justify-between items-baseline"
+                key={label}
+              >
                 <p className="mb-1">{label}:</p>
                 <strong>{value}</strong>
               </li>
