@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEvent, MouseEventHandler, useState } from "react";
 import firebase from "../../firebaseConf";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Input from "../Form/Input";
 import Error from "../Form/FormError";
 import { usePasswordInput } from "../Form/Effects/usePasswordInput";
@@ -88,9 +88,10 @@ const Registration = ({
         );
 
         if (user) {
-          // if (firebase.user) {
-          //   await updateProfile(firebase.user, { photoURL: defaultImg });
-          // }
+          await updateProfile(user, {
+            displayName: username,
+            photoURL: defaultImg,
+          });
           const { uid, displayName, email } = user;
           dispatch(setUser({ uid, displayName, email, photoURL: defaultImg }));
           navigate("/");

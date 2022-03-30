@@ -15,7 +15,10 @@ export default function Heading(props: IHeading): JSX.Element {
     : HeadingVariants["big"];
 
   return (
-    <h1 {...props} className={`${defaultVariant} ${props.className}`}>
+    <h1
+      {...props}
+      className={`${defaultVariant} ${props.className ? props.className : ""}`}
+    >
       {props.children}
     </h1>
   );

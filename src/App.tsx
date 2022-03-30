@@ -11,7 +11,7 @@ function App() {
   const isLoading = useAppSelector((state) => state.loading.isLoading);
 
   return (
-    <div className="App relative w-screen h-screen bg-[#D2D3CD]">
+    <div className="App relative w-full min-h-screen bg-[#D2D3CD]">
       {isLoading && <Loading />}
       <BrowserRouter>
         <Navigation />

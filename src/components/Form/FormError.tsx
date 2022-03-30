@@ -1,7 +1,8 @@
+import { FormServerError } from "../../Constants";
 import Heading from "../Global/Heading";
 
 interface IError {
-  error: { title: string; message: string };
+  error: FormServerError;
 }
 
 export default function Error({ error: { title, message } }: IError) {

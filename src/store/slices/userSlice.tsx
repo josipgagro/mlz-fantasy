@@ -18,6 +18,11 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
+    updateUsername: (state, action: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.displayName = action.payload;
+      }
+    },
     updateAvatar: (state, action: PayloadAction<string>) => {
       if (state.user) {
         state.user.photoURL = action.payload;
@@ -26,6 +31,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, updateAvatar } = userSlice.actions;
+export const { setUser, updateAvatar, updateUsername } = userSlice.actions;
 
 export default userSlice.reducer;

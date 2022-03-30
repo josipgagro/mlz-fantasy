@@ -26,13 +26,15 @@ export default function Navigation(): JSX.Element | null {
 
   const navigation =
     location.pathname !== "/auth" ? (
-      <nav>
+      <nav className="py-4 px-20 md:mx-3 lg:w-5/6 min-h-full lg:mx-auto bg-alfa-200 text-white flex justify-end">
         {!user && <Link to="/auth">Login</Link>}
         {user && (
           <>
             <Link to="/">Home</Link>
-            <Link to="/user-profile">User</Link>
-            <button onClick={handleClick} type="button">
+            <Link to="/user-profile" className="ml-5">
+              User
+            </Link>
+            <button onClick={handleClick} type="button" className="ml-5">
               Log out
             </button>
           </>

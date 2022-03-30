@@ -12,7 +12,7 @@ const variants = {
   primary: `${commonBtnStyles} bg-alfa-200 hover:bg-alfa-100`,
   secondary: `${commonBtnStyles} bg-beta-300 hover:bg-beta-200`,
   ternary: `${commonBtnStyles} bg-omega-200 hover:bg-omega-300`,
-  link: "h-10 text-omega-300 bg-none hover:text-omega-200 transition-colors duration-200",
+  link: "h-10 text-omega-200 bg-none hover:text-omega-200 transition-colors duration-200",
 };
 
 export default function Button(props: IButton): JSX.Element {

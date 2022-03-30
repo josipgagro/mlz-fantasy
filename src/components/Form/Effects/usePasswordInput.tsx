@@ -33,7 +33,7 @@ export function usePasswordInput(
         `Password needs to have at least ${length} characters.`
       );
     } else if (samePw !== undefined && value !== samePw && value.length > 0) {
-      setValidationError("Passwords are not identical.");
+      setValidationError("Passwords are not the same.");
     } else {
       setValidationMessage("");
 
@@ -48,10 +48,8 @@ export function usePasswordInput(
     if (value.length === 0) {
       return requiredValidationCallback();
     } else if (
-      value.length > 0 &&
-      value.length < length &&
-      samePw !== undefined &&
-      value !== samePw
+      (value.length > 0 && value.length < length) ||
+      (samePw !== undefined && value !== samePw)
     ) {
       return false;
     }

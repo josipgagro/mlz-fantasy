@@ -1,9 +1,10 @@
+import Container from "../Global/Container";
 import Heading from "../Global/Heading";
 
 export default function Home(): JSX.Element {
   return (
-    <section>
+    <Container>
       <Heading>Welcome</Heading>
-    </section>
+    </Container>
   );
 }

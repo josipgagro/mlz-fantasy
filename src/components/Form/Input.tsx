@@ -9,7 +9,7 @@ import EyeIcon from "../Global/Icons/EyeIcon";
 import EyeSlashIcon from "../Global/Icons/EyeSlashIcon";
 
 interface ICustomInputProps extends HTMLProps<HTMLInputElement> {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   validationMsg?: string;
 }
 
@@ -33,7 +33,7 @@ export default forwardRef(
         {props.label && (
           <label
             htmlFor={props.id}
-            className="flex justify-between items-baseline"
+            className="flex justify-between items-baseline mb-1"
           >
             <span>{props.label}:</span>
             {props.validationMsg && (
@@ -51,15 +51,17 @@ export default forwardRef(
             id={props.id}
             ref={ref}
             onChange={props.onChange}
-            className="h-8 w-full border-solid border-b-2 text-black focus:outline-none"
+            className={`h-8 w-full pb-1 border-solid border-b-2 text-black focus:outline-none ${
+              props.disabled ? "text-gray-400" : ""
+            }`}
           />
           {props.type === "password" && (
-            <button type="button" onClick={handleInputTypeChange}>
-              {inputType === "password" ? (
-                <EyeSlashIcon className={iconStyle} />
-              ) : (
-                <EyeIcon className={iconStyle} />
-              )}
+            <button
+              className={iconStyle}
+              type="button"
+              onClick={handleInputTypeChange}
+            >
+              {inputType === "password" ? <EyeSlashIcon /> : <EyeIcon />}
             </button>
           )}
         </div>
