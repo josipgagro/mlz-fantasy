@@ -1,4 +1,4 @@
-import { HTMLProps, useEffect, useState } from "react";
+import { HTMLProps, useEffect, useRef, useState } from "react";
 import { FormServerError } from "../../Constants";
 import PenIcon from "../Global/Icons/PenIcon";
 import FormError from "./FormError";
@@ -19,10 +19,18 @@ interface IEditableForm extends HTMLProps<HTMLFormElement> {
 
 export default function EditableForm(props: IEditableForm) {
   const [isEdit, setIsEdit] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setIsEdit(false);
   }, [props.dataToEdit]);
+
+  useEffect(() => {
+    if (isEdit) {
+      //@ts-ignore
+      formRef.current.querySelector("input").focus();
+    }
+  }, [isEdit]);
 
   const toggleEdit = (): void => {
     setIsEdit(!isEdit);
@@ -46,7 +54,11 @@ export default function EditableForm(props: IEditableForm) {
           <PenIcon className="fill-gray-400 w-4 h-4 mb-2 hover:fill-omega-300 hover:cursor-pointer transition-colors" />
         </button>
       </div>
-      {isEdit && <form onSubmit={props.onSubmit}>{props.children}</form>}
+      {isEdit && (
+        <form onSubmit={props.onSubmit} ref={formRef}>
+          {props.children}
+        </form>
+      )}
       {!isEdit && (
         <ul>
           {props.dataToEdit.map((child) => {
